@@ -104,6 +104,14 @@ class Database:
             columns=columns, rows=rows, row_count=len(rows), truncated=truncated
         )
 
+    def explain(self, query: ValidatedQuery) -> str:
+        """Return the database's query plan for a validated query (no data rows)."""
+        keyword = "EXPLAIN QUERY PLAN" if self._dialect == "sqlite" else "EXPLAIN"
+        with self._engine.connect() as conn:
+            result = conn.execute(text(f"{keyword} {query.sql}"))
+            plan_rows = result.fetchall()
+        return "\n".join(" ".join(str(cell) for cell in row) for row in plan_rows)
+
     def dispose(self) -> None:
         self._engine.dispose()
 
