@@ -158,6 +158,11 @@ pytest --cov=mcp_db_server   # coverage
 Optional Postgres support: `pip install -e ".[postgres]"` and point
 `MCP_DB_DATABASE_URL` at a `postgresql://…` URL.
 
+## How I built this
+
+A short write-up of the design and the key decision (NL→SQL belongs in the client,
+not the server) is in [WRITEUP.md](WRITEUP.md).
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
