@@ -46,6 +46,21 @@ pip install -e ".[dev]"
 python scripts/seed_db.py     # creates demo.db (e-commerce sample data)
 ```
 
+## Try it in 30 seconds (no MCP client needed)
+
+The bundled `mcp-db-demo` CLI drives the **exact same service** the MCP server
+exposes — so what you see here is what an LLM client gets:
+
+```bash
+mcp-db-demo tables
+mcp-db-demo describe customers
+mcp-db-demo query "SELECT country, COUNT(*) FROM customers GROUP BY country ORDER BY 2 DESC"
+
+# the safety layer in action — every one of these is refused:
+mcp-db-demo query "UPDATE products SET price = 0"
+mcp-db-demo query "SELECT * FROM customers; DROP TABLE customers"
+```
+
 ## Use it in Claude Desktop
 
 <!-- TODO(Day 7): finalize once entry point is verified -->

@@ -28,6 +28,7 @@ dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.6"]
 
 [project.scripts]
 mcp-db-server = "mcp_db_server.server:main"
+mcp-db-demo = "mcp_db_server.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/rudraraval4/mcp-db-server"

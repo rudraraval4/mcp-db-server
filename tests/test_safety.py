@@ -181,6 +181,12 @@ def test_keeps_smaller_limit():
     assert "LIMIT 5" in result.sql.upper()
 
 
+def test_non_literal_limit_falls_back_to_cap():
+    """A non-literal LIMIT can't be trusted as a number, so the cap is enforced."""
+    result = validate("SELECT * FROM customers LIMIT (SELECT COUNT(*) FROM orders)")
+    assert result.enforced_limit == 100
+
+
 def test_reports_referenced_tables():
     result = validate(
         "SELECT * FROM customers JOIN orders ON orders.customer_id = customers.id"
