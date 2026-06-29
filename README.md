@@ -40,7 +40,7 @@ Every `run_query` call must pass the Safety Core before execution:
 ## Quickstart
 
 ```bash
-git clone https://github.com/rudraraval95/mcp-db-server
+git clone https://github.com/rudraraval4/mcp-db-server
 cd mcp-db-server
 pip install -e ".[dev]"
 python scripts/seed_db.py     # creates demo.db (e-commerce sample data)
