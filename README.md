@@ -63,7 +63,10 @@ mcp-db-demo query "SELECT * FROM customers; DROP TABLE customers"
 
 ## Use it in Claude Desktop
 
-<!-- TODO(Day 7): finalize once entry point is verified -->
+Add the server to your `claude_desktop_config.json`, then fully restart Claude Desktop.
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -71,13 +74,22 @@ mcp-db-demo query "SELECT * FROM customers; DROP TABLE customers"
     "db": {
       "command": "mcp-db-server",
       "env": {
-        "MCP_DB_DATABASE_URL": "sqlite:////absolute/path/to/demo.db",
+        "MCP_DB_DATABASE_URL": "sqlite:///absolute/path/to/demo.db",
         "MCP_DB_MAX_ROWS": "1000"
       }
     }
   }
 }
 ```
+
+> `command` must resolve to the installed `mcp-db-server` executable. If it isn't on
+> Claude Desktop's `PATH`, use the absolute path (e.g. inside your virtualenv:
+> `.../.venv/Scripts/mcp-db-server.exe` on Windows, `.../.venv/bin/mcp-db-server` on macOS/Linux).
+
+Then just ask, in plain English:
+
+> *"What tables are in the database?"* · *"Which five customers spent the most?"* ·
+> *"Delete the orders table"* → politely refused.
 
 ## Configuration
 
