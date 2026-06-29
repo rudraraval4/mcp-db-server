@@ -75,31 +75,3 @@ per-tool rate limits. But the core idea holds: give the model freedom to ask, an
 put the guarantees in a layer it can't talk its way around.
 
 Repo: https://github.com/rudraraval4/mcp-db-server
-
----
-
-## Short version (LinkedIn / X)
-
-I let an LLM run SQL on a real database — safely.
-
-The trick: don't put natural-language → SQL *in* the server. Let the client LLM
-write the SQL, and make the server an enforced, read-only boundary it can't talk
-its way around.
-
-Two layers, both tested:
-• A sqlglot **AST gate** — only a single, capped SELECT survives. Casing tricks,
-  comment injection, stacked `DROP`s, `SELECT … INTO`: all rejected on the parse
-  tree, not by regex.
-• A **read-only connection** — even a write that slips the gate is refused by the
-  driver itself.
-
-73 adversarial tests, 97% coverage, works in Claude Desktop, SQLite + Postgres.
-It's an MCP server, so any MCP client can plug in.
-
-Ask it "who are my top customers?" → table. Ask it to "drop the orders table" →
-politely refused.
-
-Built with Python + the MCP SDK. Repo 👇
-https://github.com/rudraraval4/mcp-db-server
-
-#MCP #LLM #AIAgents #Python
