@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" font-family="-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5f6368"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1040" height="470" fill="#ffffff"/>
+  <text x="32" y="40" font-size="22" font-weight="700" fill="#202124">mcp-db-server — architecture</text>
+  <text x="32" y="64" font-size="14" fill="#5f6368">The client LLM writes the SQL. The server never trusts it: every query passes an AST-level gate before a read-only connection.</text>
+
+  <!-- LLM client -->
+  <rect x="32" y="150" width="180" height="120" rx="12" fill="#e8f0fe" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="122" y="195" font-size="15" font-weight="700" fill="#1967d2" text-anchor="middle">LLM client</text>
+  <text x="122" y="220" font-size="12.5" fill="#3c4043" text-anchor="middle">Claude Desktop</text>
+  <text x="122" y="238" font-size="12.5" fill="#3c4043" text-anchor="middle">Cursor, …</text>
+  <text x="122" y="262" font-size="11.5" fill="#5f6368" text-anchor="middle">does NL → SQL</text>
+
+  <!-- MCP transport arrow -->
+  <line x1="212" y1="210" x2="276" y2="210" stroke="#5f6368" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="244" y="200" font-size="11" fill="#5f6368" text-anchor="middle">MCP</text>
+  <text x="244" y="228" font-size="10.5" fill="#80868b" text-anchor="middle">stdio</text>
+
+  <!-- Server container -->
+  <rect x="288" y="92" width="470" height="350" rx="14" fill="#fafafa" stroke="#dadce0" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="308" y="116" font-size="13" font-weight="700" fill="#5f6368">mcp-db-server (FastMCP, Python)</text>
+
+  <!-- Tools -->
+  <rect x="312" y="132" width="422" height="62" rx="10" fill="#e6f4ea" stroke="#34a853" stroke-width="1.5"/>
+  <text x="523" y="153" font-size="12.5" font-weight="700" fill="#188038" text-anchor="middle">Tools</text>
+  <text x="523" y="176" font-size="11.5" fill="#3c4043" text-anchor="middle">list_tables · describe_table · explain_query · run_query</text>
+
+  <line x1="523" y1="194" x2="523" y2="222" stroke="#5f6368" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- Safety core (the star) -->
+  <rect x="312" y="224" width="422" height="120" rx="10" fill="#fef7e0" stroke="#f9ab00" stroke-width="2.5"/>
+  <text x="523" y="247" font-size="13.5" font-weight="700" fill="#b06000" text-anchor="middle">Safety Core — sqlglot AST gate</text>
+  <text x="335" y="272" font-size="11.5" fill="#3c4043">• read-only: only SELECT survives</text>
+  <text x="335" y="292" font-size="11.5" fill="#3c4043">• single statement (no stacked queries)</text>
+  <text x="335" y="312" font-size="11.5" fill="#3c4043">• table allow / deny lists</text>
+  <text x="335" y="332" font-size="11.5" fill="#3c4043">• enforced LIMIT cap + audit log</text>
+
+  <line x1="523" y1="344" x2="523" y2="372" stroke="#5f6368" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- Engine -->
+  <rect x="312" y="374" width="422" height="54" rx="10" fill="#f3e8fd" stroke="#a142f4" stroke-width="1.5"/>
+  <text x="523" y="396" font-size="12.5" font-weight="700" fill="#8430ce" text-anchor="middle">Engine (SQLAlchemy)</text>
+  <text x="523" y="416" font-size="11.5" fill="#3c4043" text-anchor="middle">read-only connection · statement timeout</text>
+
+  <!-- Engine to DB arrow -->
+  <line x1="758" y1="401" x2="844" y2="401" stroke="#5f6368" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="801" y="392" font-size="10.5" fill="#80868b" text-anchor="middle">read-only</text>
+
+  <!-- Database cylinder -->
+  <g>
+    <path d="M860 360 v82 a48 14 0 0 0 96 0 v-82" fill="#e8f0fe" stroke="#5f6368" stroke-width="1.5"/>
+    <ellipse cx="908" cy="360" rx="48" ry="14" fill="#e8f0fe" stroke="#5f6368" stroke-width="1.5"/>
+    <text x="908" y="412" font-size="12.5" font-weight="700" fill="#202124" text-anchor="middle">Database</text>
+    <text x="908" y="430" font-size="11" fill="#5f6368" text-anchor="middle">SQLite · Postgres</text>
+  </g>
+</svg>

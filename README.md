@@ -1,5 +1,11 @@
 # mcp-db-server
 
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Tests](https://img.shields.io/badge/tests-73%20passing-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-97%25-brightgreen)
+![MCP](https://img.shields.io/badge/MCP-server-8A2BE2)
+
 > A production-grade **MCP server** that lets any LLM client (Claude Desktop, Cursor, …)
 > query a SQL database in natural language — **read-only, AST-validated, and capped.**
 
@@ -7,7 +13,12 @@ The LLM writes the SQL. This server **never trusts it.** Every query is parsed t
 abstract syntax tree and forced through a safety gate before it is allowed near a
 read-only database connection.
 
-<!-- TODO(Day 8): demo GIF here -->
+![Architecture](assets/architecture.svg)
+
+<!-- Demo GIF: record the Claude Desktop sequence (list tables → top customers → refused DROP)
+     and drop it in as assets/demo.gif, then uncomment:
+![Demo](assets/demo.gif)
+-->
 
 ## Why this exists
 
@@ -27,6 +38,12 @@ Every `run_query` call must pass the Safety Core before execution:
 - **Row caps** — a `LIMIT` is injected/enforced at `MCP_DB_MAX_ROWS`.
 - **Statement timeout** — long queries are aborted.
 - **Audit log** — every attempt (allowed or blocked) is logged.
+
+These aren't aspirations — each is pinned by an adversarial test in
+[`tests/test_safety.py`](tests/test_safety.py) (casing tricks, comment injection,
+stacked statements, `SELECT … INTO`, `PRAGMA`/`ATTACH`, and more). A second,
+independent layer is proven in [`tests/test_engine.py`](tests/test_engine.py): even a
+write that somehow reached the engine is rejected by the read-only connection.
 
 ## Tools
 
@@ -106,18 +123,40 @@ All knobs are environment variables (prefix `MCP_DB_`):
 
 ## Architecture
 
-<!-- TODO(Day 8): diagram -->
+![Architecture](assets/architecture.svg)
+
+The client LLM does the natural-language → SQL reasoning. The server contributes the
+thing clients can't safely do themselves: a hard, enforced boundary around what that
+SQL is allowed to do. Two independent layers stand between a query and your data — the
+**Safety Core** (refuses to *emit* anything but a capped, read-only SELECT) and the
+**engine** (refuses to *execute* a write, regardless).
+
+## Project layout
 
 ```
-LLM client ──MCP/stdio──▶ tools ──▶ Safety Core (sqlglot AST) ──▶ read-only engine (SQLite/Postgres)
+src/mcp_db_server/
+  config.py      # env-driven settings — every safety knob
+  safety.py      # Safety Core: sqlglot AST validation (the heart)
+  engine.py      # SQLAlchemy read-only access + introspection
+  service.py     # shared logic behind both front-ends
+  server.py      # MCP server (FastMCP, stdio)
+  cli.py         # mcp-db-demo: same service, no MCP client needed
+  formatting.py  # result rendering
+  audit.py       # JSONL audit log
+scripts/seed_db.py   # reproducible demo database
+tests/               # 73 tests, 97% coverage
 ```
 
 ## Development
 
 ```bash
 pip install -e ".[dev]"
-pytest
+pytest                       # 73 tests
+pytest --cov=mcp_db_server   # coverage
 ```
+
+Optional Postgres support: `pip install -e ".[postgres]"` and point
+`MCP_DB_DATABASE_URL` at a `postgresql://…` URL.
 
 ## License
 
