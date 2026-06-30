@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 384" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <style>
+    .l { opacity: 0; }
+    .a1 { animation: k1 13s infinite linear; }
+    .a2 { animation: k2 13s infinite linear; }
+    .a3 { animation: k3 13s infinite linear; }
+    .a4 { animation: k4 13s infinite linear; }
+    .a5 { animation: k5 13s infinite linear; }
+    .a6 { animation: k6 13s infinite linear; }
+    @keyframes k1 { 0%,3%{opacity:0} 6%,93%{opacity:1} 100%{opacity:0} }
+    @keyframes k2 { 0%,10%{opacity:0} 13%,93%{opacity:1} 100%{opacity:0} }
+    @keyframes k3 { 0%,23%{opacity:0} 26%,93%{opacity:1} 100%{opacity:0} }
+    @keyframes k4 { 0%,30%{opacity:0} 33%,93%{opacity:1} 100%{opacity:0} }
+    @keyframes k5 { 0%,51%{opacity:0} 54%,93%{opacity:1} 100%{opacity:0} }
+    @keyframes k6 { 0%,59%{opacity:0} 62%,93%{opacity:1} 100%{opacity:0} }
+    .cur { animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+
+  <!-- window -->
+  <rect x="0.5" y="0.5" width="799" height="383" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <rect x="0.5" y="0.5" width="799" height="36" rx="10" fill="#161b22"/>
+  <rect x="0.5" y="26" width="799" height="11" fill="#161b22"/>
+  <circle cx="22" cy="18" r="6" fill="#ff5f56"/>
+  <circle cx="42" cy="18" r="6" fill="#ffbd2e"/>
+  <circle cx="62" cy="18" r="6" fill="#27c93f"/>
+  <text x="400" y="22" text-anchor="middle" font-size="12.5" fill="#8b949e">mcp-db-server — demo</text>
+
+  <g font-size="14">
+    <!-- cmd 1 -->
+    <text class="l a1" x="24" y="74" fill="#c9d1d9"><tspan fill="#56d364">$ </tspan>mcp-db-demo tables</text>
+    <!-- out 1 -->
+    <text class="l a2" x="24" y="98"  fill="#8b949e">Tables (4):</text>
+    <text class="l a2" x="24" y="118" fill="#c9d1d9">customers · products · orders · order_items</text>
+
+    <!-- cmd 2 -->
+    <text class="l a3" x="24" y="150" fill="#c9d1d9"><tspan fill="#56d364">$ </tspan>mcp-db-demo query "SELECT name, country FROM customers LIMIT 3"</text>
+    <!-- out 2 -->
+    <text class="l a4" x="24" y="174" fill="#8b949e">| name          | country |</text>
+    <text class="l a4" x="24" y="192" fill="#8b949e">| ------------- | ------- |</text>
+    <text class="l a4" x="24" y="210" fill="#c9d1d9">| Noah Silva    | India   |</text>
+    <text class="l a4" x="24" y="228" fill="#c9d1d9">| Aarav Okafor  | USA     |</text>
+    <text class="l a4" x="24" y="246" fill="#c9d1d9">| Wei Mueller   | Brazil  |</text>
+
+    <!-- cmd 3 -->
+    <text class="l a5" x="24" y="278" fill="#c9d1d9"><tspan fill="#56d364">$ </tspan>mcp-db-demo query "DROP TABLE orders"</text>
+    <!-- out 3 (refused) -->
+    <text class="l a6" x="24" y="302" fill="#f85149">✗ Query rejected by safety policy:</text>
+    <text class="l a6" x="24" y="320" fill="#ff7b72">  only read-only SELECT queries are allowed.</text>
+  </g>
+
+  <!-- tagline + blinking cursor -->
+  <text x="24" y="358" font-size="12.5" fill="#6e7681" font-style="italic">The client LLM can ask anything — the server only ever reads.</text>
+  <rect class="cur" x="556" y="345" width="8" height="15" fill="#56d364"/>
+</svg>

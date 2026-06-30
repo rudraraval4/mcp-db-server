@@ -1,10 +1,14 @@
-# mcp-db-server
+<p align="center">
+  <img src="assets/banner.svg" alt="mcp-db-server" width="100%">
+</p>
 
-![Python](https://img.shields.io/badge/python-3.11%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Tests](https://img.shields.io/badge/tests-73%20passing-brightgreen)
-![Coverage](https://img.shields.io/badge/coverage-97%25-brightgreen)
-![MCP](https://img.shields.io/badge/MCP-server-8A2BE2)
+<p align="center">
+  <a href="https://github.com/rudraraval4/mcp-db-server/actions/workflows/ci.yml"><img src="https://github.com/rudraraval4/mcp-db-server/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python">
+  <img src="https://img.shields.io/badge/coverage-97%25-brightgreen" alt="Coverage">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+  <img src="https://img.shields.io/badge/MCP-server-8A2BE2" alt="MCP">
+</p>
 
 > A production-grade **MCP server** that lets any LLM client (Claude Desktop, Cursor, …)
 > query a SQL database in natural language — **read-only, AST-validated, and capped.**
@@ -13,12 +17,9 @@ The LLM writes the SQL. This server **never trusts it.** Every query is parsed t
 abstract syntax tree and forced through a safety gate before it is allowed near a
 read-only database connection.
 
-![Architecture](assets/architecture.svg)
-
-<!-- Demo GIF: record the Claude Desktop sequence (list tables → top customers → refused DROP)
-     and drop it in as assets/demo.gif, then uncomment:
-![Demo](assets/demo.gif)
--->
+<p align="center">
+  <img src="assets/demo.svg" alt="Demo: list tables, query top customers, refused DROP" width="100%">
+</p>
 
 ## Why this exists
 
