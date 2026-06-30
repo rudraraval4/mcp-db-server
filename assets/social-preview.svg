@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="0.55" stop-color="#161b22"/>
+      <stop offset="1" stop-color="#1f2a44"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58a6ff"/>
+      <stop offset="1" stop-color="#a371f7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect x="0" y="0" width="12" height="640" fill="url(#accent)"/>
+
+  <!-- shield + db motif -->
+  <g transform="translate(96,150) scale(1.7)">
+    <path d="M52 2 L98 18 V58 C98 92 78 108 52 118 C26 108 6 92 6 58 V18 Z"
+          fill="none" stroke="url(#accent)" stroke-width="3"/>
+    <ellipse cx="52" cy="40" rx="26" ry="9" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+    <path d="M26 40 V70 C26 75 38 80 52 80 C66 80 78 75 78 70 V40" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+    <path d="M26 55 C26 60 38 65 52 65 C66 65 78 60 78 55" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+    <path d="M38 60 l10 10 l18 -20" fill="none" stroke="#56d364" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="430" y="210" font-size="78" font-weight="800" fill="#e6edf3">mcp-db-server</text>
+  <text x="432" y="270" font-size="32" fill="#9da7b3">Talk to your SQL database in natural language.</text>
+
+  <!-- feature chips -->
+  <g font-size="24" font-weight="700">
+    <rect x="432" y="312" width="190" height="52" rx="26" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="527" y="346" text-anchor="middle" fill="#58a6ff">read-only</text>
+    <rect x="640" y="312" width="248" height="52" rx="26" fill="#0d1117" stroke="#a371f7" stroke-width="1.5"/>
+    <text x="764" y="346" text-anchor="middle" fill="#a371f7">AST-validated</text>
+    <rect x="906" y="312" width="200" height="52" rx="26" fill="#0d1117" stroke="#56d364" stroke-width="1.5"/>
+    <text x="1006" y="346" text-anchor="middle" fill="#56d364">MCP server</text>
+  </g>
+
+  <!-- faux refused query for intrigue -->
+  <g font-family="ui-monospace, Menlo, Consolas, monospace" font-size="23">
+    <text x="432" y="436" fill="#8b949e"><tspan fill="#56d364">$ </tspan>query "DROP TABLE orders"</text>
+    <text x="432" y="470" fill="#f85149">✗ rejected by safety policy — read-only.</text>
+  </g>
+
+  <line x1="432" y1="516" x2="1184" y2="516" stroke="#30363d" stroke-width="1.5"/>
+  <text x="432" y="556" font-size="22" fill="#6e7681">The LLM writes the SQL. The server never trusts it.</text>
+  <text x="432" y="592" font-size="20" fill="#58a6ff">github.com/rudraraval4/mcp-db-server</text>
+</svg>
