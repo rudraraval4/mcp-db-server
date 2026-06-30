@@ -55,6 +55,56 @@ write that somehow reached the engine is rejected by the read-only connection.
 | `explain_query(sql)` | Explains a query (and engine plan) without returning rows |
 | `run_query(sql)` | Validated, capped, read-only result set |
 
+## Examples
+
+You ask in plain English; the client LLM writes the SQL; the server validates, caps,
+and runs it read-only. Real output from the bundled `demo.db`:
+
+**"What's total revenue by product category?"**
+
+```sql
+SELECT p.category, ROUND(SUM(oi.quantity * oi.unit_price), 2) AS revenue
+FROM products p JOIN order_items oi ON oi.product_id = p.id
+GROUP BY p.category ORDER BY revenue DESC;
+```
+
+| category | revenue |
+|---|---|
+| Electronics | 85746.19 |
+| Furniture | 76442.0 |
+| Apparel | 39219.91 |
+| Sports | 18746.5 |
+| Home | 12596.5 |
+| Stationery | 1663.22 |
+
+**"How many orders are there by status?"**
+
+```sql
+SELECT status, COUNT(*) AS orders FROM orders GROUP BY status ORDER BY orders DESC;
+```
+
+| status | orders |
+|---|---|
+| completed | 206 |
+| cancelled | 79 |
+| shipped | 58 |
+| pending | 57 |
+
+**"Which products have never been ordered?"**
+
+```sql
+SELECT name, category FROM products
+WHERE id NOT IN (SELECT DISTINCT product_id FROM order_items);
+```
+
+| name | category |
+|---|---|
+| Sticky Notes | Stationery |
+| Desk Planner | Stationery |
+| Highlighter Set | Stationery |
+
+**"Now delete the orders table."** → *Query rejected by safety policy: only read-only SELECT queries are allowed.*
+
 ## Quickstart
 
 ```bash
